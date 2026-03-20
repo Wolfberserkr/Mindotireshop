@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindo Tire Shop | Santa Cruz, Aruba</title>
+    <meta name="description" content="Mindo Tire Shop — New & used tires, batteries, brake service, performance accessories & road service in Santa Cruz, Aruba.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Base ────────────────────────────────── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #0d0d0d;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+
+        /* ── Header / Nav ────────────────────────────────── */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(13,13,13,.92);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            border-bottom: 2px solid #e3262e;
+        }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 24px;
+        }
+        .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem; font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+        .logo-text span { color: #e3262e; }
+        .desktop-nav a {
+            color: #ccc; text-decoration: none; margin-left: 28px;
+            font-size: .95rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: .5px; transition: color .2s;
+        }
+        .desktop-nav a:hover { color: #f5c518; }
+
+        /* ── Hamburger Button ────────────────────────────── */
+        .hamburger {
+            display: none;
+            background: none; border: none; cursor: pointer;
+            width: 36px; height: 36px;
+            position: relative; z-index: 300;
+        }
+        .hamburger span {
+            display: block;
+            width: 26px; height: 2px;
+            background: #fff;
+            margin: 6px auto;
+            transition: transform .3s, opacity .3s;
+            border-radius: 2px;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* ── Mobile Drawer ───────────────────────────────── */
+        .mobile-drawer {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            background: #141414;
+            z-index: 250;
+            padding: 90px 32px 40px;
+            transition: right .35s cubic-bezier(.4,0,.2,1);
+            border-left: 2px solid #e3262e;
+            display: flex; flex-direction: column; gap: 8px;
+        }
+        .mobile-drawer.open { right: 0; }
+        .mobile-drawer a {
+            color: #ccc; text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            padding: 14px 0;
+            border-bottom: 1px solid #222;
+            transition: color .2s, padding-left .2s;
+        }
+        .mobile-drawer a:hover { color: #f5c518; padding-left: 8px; }
+        .drawer-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.6);
+            z-index: 240;
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s;
+        }
+        .drawer-overlay.show { opacity: 1; pointer-events: all; }
+
+        /* ── Open / Closed Status Badge ──────────────────── */
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: .78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-left: 16px;
+        }
+        .status-badge.open { background: rgba(37,211,102,.15); color: #25D366; border: 1px solid rgba(37,211,102,.3); }
+        .status-badge.closed { background: rgba(227,38,46,.15); color: #e3262e; border: 1px solid rgba(227,38,46,.3); }
+        .status-dot {
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .status-badge.open .status-dot { background: #25D366; animation: blink 1.5s infinite; }
+        .status-badge.closed .status-dot { background: #e3262e; }
+        @keyframes blink { 0%,100%{ opacity:1 } 50%{ opacity:.3 } }
+
+        /* ── Hero ────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #0d0d0d;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1600&q=80') center center / cover no-repeat;
+            filter: brightness(.3) saturate(.8);
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(13,13,13,.6) 0%, rgba(13,13,13,.3) 40%, rgba(13,13,13,.8) 100%),
+                radial-gradient(ellipse at 30% 70%, rgba(227,38,46,.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(245,197,24,.1) 0%, transparent 50%);
+            z-index: 1;
+        }
+        .hero::after {
+            content: '';
+            position: absolute; top: 0; right: -60px;
+            width: 400px; height: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent, transparent 18px,
+                rgba(255,255,255,.02) 18px, rgba(255,255,255,.02) 20px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            padding: 120px 24px 80px;
+            max-width: 800px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(227,38,46,.15);
+            border: 1px solid rgba(227,38,46,.4);
+            color: #e3262e;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: .8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .hero h1 .accent { color: #e3262e; }
+        .hero h1 .gold { color: #f5c518; }
+        .hero-sub {
+            font-size: 1.15rem;
+            color: #999;
+            margin-bottom: 36px;
+            max-width: 550px;
+            margin-left: auto; margin-right: auto;
+        }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: transform .2s, box-shadow .2s;
+            cursor: pointer; border: none;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary {
+            background: #e3262e;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(227,38,46,.35);
+        }
+        .btn-primary:hover { box-shadow: 0 6px 28px rgba(227,38,46,.5); }
+        .btn-outline {
+            background: transparent;
+            color: #f5c518;
+            border: 2px solid #f5c518;
+        }
+        .btn-outline:hover {
+            background: rgba(245,197,24,.1);
+            box-shadow: 0 4px 20px rgba(245,197,24,.2);
+        }
+        .btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* ── Section shared ──────────────────────────────── */
+        section { padding: 80px 24px; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-title {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .section-title .accent { color: #e3262e; }
+        .section-line {
+            width: 60px; height: 3px;
+            background: #e3262e;
+            margin-bottom: 40px;
+        }
+
+        /* ── Scroll Animations ───────────────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity .7s ease, transform .7s ease;
+        }
+        .reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        /* Stagger cards */
+        .service-card { transition-delay: calc(var(--i, 0) * .1s); }
+
+        /* ── Services ────────────────────────────────────── */
+        #services { background: #111; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .service-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 0;
+            text-align: center;
+            transition: border-color .3s, transform .3s, box-shadow .3s;
+            overflow: hidden;
+        }
+        .service-card:hover {
+            border-color: #e3262e;
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(227,38,46,.15);
+        }
+        .service-card-img {
+            width: 100%; height: 140px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(.7) saturate(.9);
+            transition: filter .3s, transform .4s;
+        }
+        .service-card:hover .service-card-img {
+            filter: brightness(.85) saturate(1);
+            transform: scale(1.05);
+        }
+        .service-card-img-wrap {
+            overflow: hidden;
+            border-bottom: 2px solid #e3262e;
+        }
+        .service-card-body {
+            padding: 24px 20px 28px;
+        }
+        .service-icon {
+            width: 56px; height: 56px;
+            margin: 0 auto 16px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(227,38,46,.1);
+            border-radius: 50%;
+            transition: transform .3s, background .3s;
+        }
+        .service-card:hover .service-icon {
+            transform: scale(1.15) rotate(5deg);
+            background: rgba(227,38,46,.2);
+        }
+        .service-icon svg { width: 28px; height: 28px; fill: #e3262e; }
+        .service-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .service-card p {
+            font-size: .9rem;
+            color: #888;
+        }
+
+        /* ── Reviews ────────────────────────────────────── */
+        #reviews { background: #111; }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .review-card {
+            background: #1a1a1a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,.4);
+        }
+        .review-stars { color: #f5a623; font-size: 1.1rem; margin-bottom: .5rem; }
+        .review-text {
+            color: #ccc;
+            font-size: .95rem;
+            line-height: 1.5;
+            margin-bottom: .75rem;
+            font-style: italic;
+        }
+        .review-author {
+            color: #999;
+            font-size: .85rem;
+            font-weight: 600;
+        }
+        .reviews-badge {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .reviews-badge .rating-big {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 700;
+        }
+        .reviews-badge .stars-big { color: #f5a623; font-size: 1.5rem; }
+        .reviews-badge .review-count { color: #999; font-size: .9rem; margin-top: .25rem; }
+        .reviews-badge a { color: #e3262e; text-decoration: none; }
+        .reviews-badge a:hover { text-decoration: underline; }
+
+        /* ── Quote Form ──────────────────────────────────── */
+        #quote { background: #0d0d0d; }
+        .quote-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .quote-form .full-width { grid-column: 1 / -1; }
+        .quote-form label {
+            font-size: .8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: #888;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .quote-form input,
+        .quote-form select,
+        .quote-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-family: 'Open Sans', sans-serif;
+            font-size: .95rem;
+            transition: border-color .2s, box-shadow .2s;
+            outline: none;
+        }
+        .quote-form input:focus,
+        .quote-form select:focus,
+        .quote-form textarea:focus {
+            border-color: #e3262e;
+            box-shadow: 0 0 0 3px rgba(227,38,46,.15);
+        }
+        .quote-form input::placeholder,
+        .quote-form textarea::placeholder { color: #555; }
+        .quote-form select option { background: #1a1a1a; }
+        .quote-form textarea { resize: vertical; min-height: 100px; }
+        .btn-submit {
+            background: #e3262e; color: #fff;
+            padding: 14px 40px;
+            border: none; border-radius: 6px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.05rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform .2s, box-shadow .2s;
+            justify-self: start;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(227,38,46,.4);
+        }
+        /* Success message */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .form-success.show { display: block; }
+        .form-success svg { width: 56px; height: 56px; margin-bottom: 16px; }
+        .form-success h3 { color: #25D366; font-size: 1.4rem; margin-bottom: 8px; }
+        .form-success p { color: #888; }
+
+        /* ── Hours & Contact ─────────────────────────────── */
+        #contact { background: #0d0d0d; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .hours-table tr { border-bottom: 1px solid #1e1e1e; }
+        .hours-table td {
+            padding: 14px 0;
+            font-size: .95rem;
+        }
+        .hours-table td:first-child {
+            font-weight: 600;
+            color: #ccc;
+        }
+        .hours-table td:last-child {
+            text-align: right;
+            color: #f5c518;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: .5px;
+        }
+        .contact-info-block { display: flex; flex-direction: column; gap: 20px; }
+        .contact-item {
+            display: flex; align-items: flex-start; gap: 14px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background .2s;
+        }
+        .contact-item:hover { background: rgba(255,255,255,.03); }
+        .contact-item-icon {
+            flex-shrink: 0;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(227,38,46,.1);
+            border-radius: 8px;
+            transition: background .2s;
+        }
+        .contact-item:hover .contact-item-icon { background: rgba(227,38,46,.2); }
+        .contact-item-icon svg { width: 20px; height: 20px; fill: #e3262e; }
+        .contact-item-text strong {
+            display: block;
+            color: #fff;
+            font-size: .85rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 2px;
+        }
+        .contact-item-text span, .contact-item-text a {
+            display: block;
+            color: #999;
+            font-size: .95rem;
+            text-decoration: none;
+        }
+        .contact-item-text a:hover { color: #f5c518; }
+
+        /* Copy tooltip */
+        .copy-tooltip {
+            position: fixed;
+            bottom: 100px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #25D366;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: .9rem;
+            font-weight: 600;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s, transform .3s;
+            z-index: 300;
+        }
+        .copy-tooltip.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Map embed */
+        .map-wrapper {
+            margin-top: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+        }
+        .map-wrapper iframe {
+            width: 100%; height: 280px; border: 0;
+            filter: grayscale(.8) invert(.92) contrast(1.1);
+        }
+
+        /* ── Footer ──────────────────────────────────────── */
+        footer {
+            text-align: center;
+            padding: 32px 24px;
+            border-top: 1px solid #1e1e1e;
+            font-size: .85rem;
+            color: #555;
+        }
+        footer a { color: #e3262e; text-decoration: none; }
+        footer a:hover { color: #f5c518; }
+
+        /* ── WhatsApp FAB ────────────────────────────────── */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 28px; right: 28px;
+            width: 60px; height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,.4);
+            z-index: 200;
+            transition: transform .2s, box-shadow .2s;
+            text-decoration: none;
+        }
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 28px rgba(37,211,102,.6);
+        }
+        .whatsapp-fab svg { width: 32px; height: 32px; fill: #fff; }
+        .whatsapp-fab::after {
+            content: '';
+            position: absolute;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 2px solid #25D366;
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes pulse-ring {
+            0%   { transform: scale(1);   opacity: .6; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* ── Back to Top ─────────────────────────────────── */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px; left: 28px;
+            width: 46px; height: 46px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 200;
+            opacity: 0; pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity .3s, transform .3s, border-color .2s, background .2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .back-to-top.show {
+            opacity: 1; pointer-events: all;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            border-color: #e3262e;
+            background: #222;
+        }
+        .back-to-top svg { width: 20px; height: 20px; fill: #e3262e; }
+
+        /* ── Mobile Sticky CTA Bar ───────────────────────── */
+        .mobile-cta {
+            display: none;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(13,13,13,.95);
+            backdrop-filter: blur(8px);
+            border-top: 2px solid #e3262e;
+            z-index: 190;
+            padding: 10px 16px;
+        }
+        .mobile-cta-inner {
+            display: flex; gap: 10px;
+            max-width: 500px; margin: 0 auto;
+        }
+        .mobile-cta .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 12px 16px;
+            font-size: .9rem;
+        }
+
+        /* ── Responsive ──────────────────────────────────── */
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .desktop-nav { display: none; }
+            .hamburger { display: block; }
+            .hero-content { padding: 100px 20px 60px; }
+            .quote-form { grid-template-columns: 1fr; }
+            .mobile-cta { display: block; }
+            .whatsapp-fab { bottom: 80px; }
+            .back-to-top { bottom: 80px; }
+            .status-badge { margin-left: 0; margin-top: 4px; }
+            .nav-inner { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ─── Header ─────────────────────────────────────────── -->
+<header>
+    <div class="nav-inner">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <div class="logo-text">Mindo <span>Tire Shop</span></div>
+            <div class="status-badge" id="statusBadge">
+                <span class="status-dot"></span>
+                <span id="statusText">Checking...</span>
+            </div>
+        </div>
+        <nav class="desktop-nav">
+            <a href="#services">Services</a>
+            <a href="#quote">Get a Quote</a>
+            <a href="#contact">Hours & Contact</a>
+            <a href="https://www.facebook.com/Mindotireshop2/" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.instagram.com/mindotireshop/" target="_blank" rel="noopener">Instagram</a>
+        </nav>
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- ─── Mobile Drawer ──────────────────────────────────── -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+    <a href="#services" onclick="closeDrawer()">Services</a>
+    <a href="#quote" onclick="closeDrawer()">Get a Quote</a>
+    <a href="#contact" onclick="closeDrawer()">Hours & Contact</a>
+    <a href="https://www.facebook.com/Mindotireshop2/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.instagram.com/mindotireshop/" target="_blank" rel="noopener">Instagram</a>
+</div>
+
+<!-- ─── Hero ───────────────────────────────────────────── -->
+<section class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-content">
+        <h1 class="reveal">Your Trusted <span class="accent">Tire</span> &amp; <span class="gold">Auto</span> Shop</h1>
+        <p class="hero-sub reveal">New &amp; used tires, batteries, brake service, performance accessories, and road assistance — all under one roof.</p>
+        <div class="hero-buttons reveal">
+            <a href="https://wa.me/2975930888?text=Hi%2C%20I'd%20like%20to%20inquire%20about%20your%20services" class="btn btn-primary" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                WhatsApp Us
+            </a>
+            <a href="tel:+2975930888" class="btn btn-outline">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.01-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.1.31.03.66-.25.94l-2.2 2.28z"/></svg>
+                Call Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Services ───────────────────────────────────────── -->
+<section id="services">
+    <div class="section-inner">
+        <h2 class="section-title reveal-left">Our <span class="accent">Services</span></h2>
+        <div class="section-line reveal-left"></div>
+        <div class="services-grid">
+            <div class="service-card reveal" style="--i:0">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1764699186616-8f707281e4f3?w=500&q=75" alt="Tires" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#e3262e" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#e3262e"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#e3262e" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>New &amp; Used Tires</h3>
+                    <p>Wide selection of quality tires for cars, trucks, and SUVs at competitive island prices.</p>
+                </div>
+            </div>
+
+            <div class="service-card reveal" style="--i:1">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1597766325363-f5576d851d6a?w=500&q=75" alt="Car battery" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="10" rx="2" fill="none" stroke="#e3262e" stroke-width="2"/><path d="M7 8V6a2 2 0 012-2h6a2 2 0 012 2v2" fill="none" stroke="#e3262e" stroke-width="2"/><line x1="20" y1="12" x2="22" y2="12" stroke="#e3262e" stroke-width="2" stroke-linecap="round"/><path d="M10 13h4" stroke="#e3262e" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Batteries &amp; Charging</h3>
+                    <p>Battery testing, replacement, and charging services to keep you running.</p>
+                </div>
+            </div>
+
+            <div class="service-card reveal" style="--i:2">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1761040100230-8c8e6fc64638?w=500&q=75" alt="Brake disc" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#e3262e" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="#e3262e" stroke-width="2"/><path d="M12 3v2M12 19v2" stroke="#e3262e" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Brake Drum &amp; Rotor</h3>
+                    <p>Complete brake inspection, drum and rotor resurfacing, and repair for safe stopping.</p>
+                </div>
+            </div>
+
+            <div class="service-card reveal" style="--i:3">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=500&q=75" alt="Performance car" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="none" stroke="#e3262e" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Performance Accessories</h3>
+                    <p>Upgrade your ride with quality performance parts and accessories.</p>
+                </div>
+            </div>
+
+            <div class="service-card reveal" style="--i:4">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1686966933735-305bd8fe0a77?w=500&q=75" alt="Road assistance" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" fill="none" stroke="#e3262e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 1v3M10 1v3M14 1v3" stroke="#e3262e" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <h3>Road Service</h3>
+                    <p>Stuck on the road? We come to you with on-the-spot tire and battery assistance.</p>
+                </div>
+            </div>
+
+            <div class="service-card reveal" style="--i:5">
+                <div class="service-card-img-wrap">
+                    <img class="service-card-img" src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=500&q=75" alt="Auto repair" loading="lazy">
+                </div>
+                <div class="service-card-body">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" fill="none" stroke="#e3262e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <h3>General Repairs</h3>
+                    <p>From oil changes to full inspections — reliable automotive repair you can count on.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Reviews ───────────────────────────────────────── -->
+<section id="reviews">
+    <div class="section-inner">
+        <h2 class="section-title reveal-left">What Our <span class="accent">Customers</span> Say</h2>
+        <div class="section-line reveal-left"></div>
+
+        <div class="reviews-badge reveal">
+            <div class="rating-big">4.5</div>
+            <div class="stars-big">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="review-count">Based on <a href="https://www.google.com/maps/place/Mindo+Tire+Shop/@12.4992026,-69.9785358,1009m/data=!3m1!1e3!4m8!3m7!1s0x8e85394828fd4987:0x79cc2552c9d3bd27!8m2!3d12.4992026!4d-69.9785358!9m1!1b1!16s%2Fg%2F11b6q1j7w8" target="_blank" rel="noopener">50 Google Reviews</a></div>
+        </div>
+
+        <div class="reviews-grid">
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"Fast and friendly service and good quality tires. I will be back."</div>
+                <div class="review-author">— Robert Giel</div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"Changed my tire in less than 10 minutes! Great service."</div>
+                <div class="review-author">— Neska</div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"The service was very fast and extremely friendly staff. Definitely recommended."</div>
+                <div class="review-author">— Oracle</div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"Great tire prices compared to other tire places. I bought 2 tires for the price of 1 I would pay at another place."</div>
+                <div class="review-author">— Lee Querero</div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"One place for the best second hand and new tires. Good service."</div>
+                <div class="review-author">— Frank Croes</div>
+            </div>
+            <div class="review-card reveal">
+                <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <div class="review-text">"Best tire shop on Aruba."</div>
+                <div class="review-author">— Francis Hermina</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Request a Quote ────────────────────────────────── -->
+<section id="quote">
+    <div class="section-inner">
+        <h2 class="section-title reveal-left">Request a <span class="accent">Quote</span></h2>
+        <div class="section-line reveal-left"></div>
+
+        <form class="quote-form reveal" id="quoteForm" onsubmit="handleQuote(event)">
+            <div>
+                <label for="qName">Your Name</label>
+                <input type="text" id="qName" name="name" placeholder="e.g. Juan Perez" required>
+            </div>
+            <div>
+                <label for="qPhone">Phone / WhatsApp</label>
+                <input type="tel" id="qPhone" name="phone" placeholder="+297 ..." required>
+            </div>
+            <div>
+                <label for="qService">Service Needed</label>
+                <select id="qService" name="service" onchange="handleServiceChange(this.value)">
+                    <option value="">Select a service...</option>
+                    <option>New Tires</option>
+                    <option>Used Tires</option>
+                    <option>Battery Replacement</option>
+                    <option>Brake Service</option>
+                    <option>Road Service</option>
+                    <option>Performance Accessories</option>
+                    <option>General Repair</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div id="tireSizeWrap" style="display:none;">
+                <label for="qTireSize">Tire Size</label>
+                <input type="text" id="qTireSize" name="tireSize" placeholder="e.g. 225/55R17">
+            </div>
+            <div class="full-width">
+                <label for="qMsg">Message (optional)</label>
+                <textarea id="qMsg" name="message" placeholder="Tell us more about what you need..."></textarea>
+            </div>
+            <div class="full-width">
+                <button type="submit" class="btn-submit">Send Request</button>
+            </div>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#25D366" stroke-width="2"/><path d="M7 13l3 3 7-7" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h3>Request Sent!</h3>
+            <p>We'll get back to you shortly via WhatsApp or phone. Danki!</p>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Hours & Contact ────────────────────────────────── -->
+<section id="contact">
+    <div class="section-inner">
+        <h2 class="section-title reveal-left">Hours &amp; <span class="accent">Contact</span></h2>
+        <div class="section-line reveal-left"></div>
+
+        <div class="contact-grid">
+            <!-- Hours -->
+            <div class="reveal-left">
+                <table class="hours-table">
+                    <tr><td>Monday – Friday</td><td>8:30 AM – 6:00 PM</td></tr>
+                    <tr><td>Saturday</td><td>8:30 AM – 3:00 PM</td></tr>
+                    <tr><td>Sunday</td><td>9:00 AM – 2:00 PM</td></tr>
+                </table>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info-block reveal-right">
+                <div class="contact-item" onclick="copyText('+297 593 0888', this)" title="Click to copy">
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" fill="none" stroke="#e3262e" stroke-width="2"/><circle cx="12" cy="10" r="3" fill="none" stroke="#e3262e" stroke-width="2"/></svg>
+                    </div>
+                    <div class="contact-item-text">
+                        <strong>Address</strong>
+                        <span>Macuarima 61a, Santa Cruz, Aruba</span>
+                    </div>
+                </div>
+
+                <div class="contact-item" onclick="copyText('+297 593 0888', this)" title="Click to copy phone">
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="none" stroke="#e3262e" stroke-width="2"/></svg>
+                    </div>
+                    <div class="contact-item-text">
+                        <strong>Phone</strong>
+                        <a href="tel:+2975930888">+297 593 0888</a>
+                        <a href="tel:+2975851568">+297 585 1568</a>
+                    </div>
+                </div>
+
+                <div class="contact-item" onclick="copyText('Mindo.tire.shop@hotmail.com', this)" title="Click to copy email">
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="#e3262e" stroke-width="2"/><polyline points="22,6 12,13 2,6" fill="none" stroke="#e3262e" stroke-width="2"/></svg>
+                    </div>
+                    <div class="contact-item-text">
+                        <strong>Email</strong>
+                        <a href="mailto:Mindo.tire.shop@hotmail.com">Mindo.tire.shop@hotmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-item" onclick="window.open('https://www.facebook.com/Mindotireshop2/','_blank')">
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" fill="none" stroke="#e3262e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="contact-item-text">
+                        <strong>Facebook</strong>
+                        <a href="https://facebook.com/Mindotireshop2" target="_blank" rel="noopener">@Mindotireshop</a>
+                    </div>
+                </div>
+
+                <div class="contact-item" onclick="window.open('https://www.instagram.com/mindotireshop/','_blank')">
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="#e3262e" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#e3262e" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#e3262e"/></svg>
+                    </div>
+                    <div class="contact-item-text">
+                        <strong>Instagram</strong>
+                        <a href="https://www.instagram.com/mindotireshop/" target="_blank" rel="noopener">@mindotireshop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-wrapper reveal">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3117.6!2d-69.97!3d12.51!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sMacuarima+61a%2C+Santa+Cruz%2C+Aruba!5e0!3m2!1sen!2s!4v1" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ─── Footer ─────────────────────────────────────────── -->
+<footer class="reveal">
+    <p>&copy; 2026 Mindo Tire Shop &mdash; Macuarima 61a, Santa Cruz, Aruba &mdash; <a href="https://www.facebook.com/Mindotireshop2/" target="_blank" rel="noopener">Facebook</a> &middot; <a href="https://www.instagram.com/mindotireshop/" target="_blank" rel="noopener">Instagram</a></p>
+</footer>
+
+<!-- ─── WhatsApp FAB ───────────────────────────────────── -->
+<a href="https://wa.me/2975930888?text=Hi%2C%20I'd%20like%20to%20inquire%20about%20your%20services" class="whatsapp-fab" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ─── Back to Top ────────────────────────────────────── -->
+<a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="#e3262e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+
+<!-- ─── Mobile Sticky CTA ──────────────────────────────── -->
+<div class="mobile-cta">
+    <div class="mobile-cta-inner">
+        <a href="https://wa.me/2975930888" class="btn btn-primary" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+            WhatsApp
+        </a>
+        <a href="tel:+2975930888" class="btn btn-outline">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.1.31.03.66-.25.94l-2.2 2.28z"/></svg>
+            Call
+        </a>
+    </div>
+</div>
+
+<!-- Copy tooltip -->
+<div class="copy-tooltip" id="copyTooltip">Copied!</div>
+
+<!-- ─── JavaScript ─────────────────────────────────────── -->
+<script>
+// ── Scroll Reveal Animations ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ── Open / Closed Status ──
+function updateStatus() {
+    const badge = document.getElementById('statusBadge');
+    const text = document.getElementById('statusText');
+    // Aruba is UTC-4 (AST, no daylight saving)
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Aruba' }));
+    const day = now.getDay(); // 0=Sun
+    const h = now.getHours();
+    const m = now.getMinutes();
+    const time = h + m / 60;
+
+    let isOpen = false;
+    if (day >= 1 && day <= 5) isOpen = time >= 8.5 && time < 18;      // Mon-Fri 8:30-6
+    else if (day === 6)        isOpen = time >= 8.5 && time < 15;      // Sat 8:30-3
+    else if (day === 0)        isOpen = time >= 9   && time < 14;      // Sun 9-2
+
+    badge.className = 'status-badge ' + (isOpen ? 'open' : 'closed');
+    text.textContent = isOpen ? 'Open Now' : 'Closed';
+}
+updateStatus();
+setInterval(updateStatus, 60000);
+
+// ── Hamburger Menu ──
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('mobileDrawer');
+const overlay = document.getElementById('drawerOverlay');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    drawer.classList.toggle('open');
+    overlay.classList.toggle('show');
+    document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+});
+overlay.addEventListener('click', closeDrawer);
+
+function closeDrawer() {
+    hamburger.classList.remove('active');
+    drawer.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+// ── Back to Top ──
+const backBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+    backBtn.classList.toggle('show', window.scrollY > 500);
+}, { passive: true });
+
+// ── Copy to Clipboard ──
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        const tooltip = document.getElementById('copyTooltip');
+        tooltip.textContent = 'Copied: ' + text;
+        tooltip.classList.add('show');
+        setTimeout(() => tooltip.classList.remove('show'), 2000);
+    });
+}
+
+// ── Quote Form Handler ──
+function handleQuote(e) {
+    e.preventDefault();
+    const form = document.getElementById('quoteForm');
+    const success = document.getElementById('formSuccess');
+
+    // Build WhatsApp message from form data
+    const name = document.getElementById('qName').value;
+    const phone = document.getElementById('qPhone').value;
+    const service = document.getElementById('qService').value;
+    const tireSize = document.getElementById('qTireSize').value;
+    const msg = document.getElementById('qMsg').value;
+
+    let waMsg = `Hi, I'd like to request a quote.\n\n`;
+    waMsg += `Name: ${name}\nPhone: ${phone}`;
+    if (service) waMsg += `\nService: ${service}`;
+    if (tireSize) waMsg += `\nTire Size: ${tireSize}`;
+    if (msg) waMsg += `\nMessage: ${msg}`;
+
+    // Show success, then open WhatsApp
+    form.style.display = 'none';
+    success.classList.add('show');
+
+    setTimeout(() => {
+        window.open(`https://wa.me/2975930888?text=${encodeURIComponent(waMsg)}`, '_blank');
+    }, 1200);
+
+    // Reset after a bit
+    setTimeout(() => {
+        form.style.display = '';
+        success.classList.remove('show');
+        form.reset();
+        handleServiceChange(''); // hide tire size field on reset
+    }, 6000);
+}
+
+// ── Dynamic Tire Size Field ──
+function handleServiceChange(value) {
+    const wrap = document.getElementById('tireSizeWrap');
+    const input = document.getElementById('qTireSize');
+    if (value === 'New Tires' || value === 'Used Tires') {
+        wrap.style.display = '';
+        input.placeholder = 'e.g. 225/55R17';
+    } else {
+        wrap.style.display = 'none';
+        input.value = '';
+    }
+}
+</script>
+
+</body>
+</html>
