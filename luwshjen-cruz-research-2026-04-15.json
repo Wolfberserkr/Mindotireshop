@@ -1,0 +1,39 @@
+{
+  "subject": "Luwshjen Cruz",
+  "type": "person",
+  "location": "Aruba",
+  "generated": "2026-04-15",
+  "contact": {
+    "phone": [],
+    "email": [],
+    "address": []
+  },
+  "social_media": {
+    "linkedin": null,
+    "facebook": null,
+    "twitter": null,
+    "instagram": null
+  },
+  "news_mentions": [],
+  "public_records": [],
+  "sources": [],
+  "search_log": [
+    {"query": "\"Luwshjen Cruz\" \"Aruba\" contact phone email address", "result": "no_match"},
+    {"query": "\"Luwshjen Cruz\" site:linkedin.com", "result": "no_match"},
+    {"query": "\"Luwshjen Cruz\" site:facebook.com", "result": "no_match"},
+    {"query": "\"Luwshjen Cruz\" site:instagram.com OR site:twitter.com OR site:x.com", "result": "no_match"},
+    {"query": "\"Luwshjen Cruz\" news mentions", "result": "no_match"},
+    {"query": "\"Luwshjen\" Aruba public records court", "result": "no_match"},
+    {"query": "Luwshjen Cruz Aruba", "result": "no_match"},
+    {"query": "Luwshjen Aruba", "result": "no_match"},
+    {"query": "arubanative.com search for Luwshjen Cruz", "result": "site_blocked_403"},
+    {"query": "24ora.com search for Luwshjen Cruz", "result": "site_blocked_403"}
+  ],
+  "notes": [
+    "No publicly indexed information found for this individual.",
+    "Subject appears to be a private person with no public online presence.",
+    "Aruban local news sites (arubanative.com, 24ora.com) blocked direct access.",
+    "Aruba civil registry and court records are not available online — contact required.",
+    "Alternative spellings of the first name may yield different results."
+  ]
+}
